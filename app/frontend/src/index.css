@@ -5,7 +5,7 @@
 /* Custom styles can be added below */
 @layer base {
   body {
-    @apply text-gray-900 bg-white dark:bg-gray-900 dark:text-white;
+    @apply text-gray-50 bg-black;
   }
 }
 
@@ -21,5 +21,87 @@
   }
   .input {
     @apply px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
+  }
+}
+
+/* Auth UI theme + animations (no extra deps) */
+:root {
+  /* Dark matte + neon glow theme */
+  --auth-bg-from: #020617; /* slate-950 */
+  --auth-bg-via: #020617;  /* slate-950 */
+  --auth-bg-to: #020617;   /* slate-950 */
+}
+
+@keyframes prok-float {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-10px) translateX(6px);
+  }
+}
+
+@keyframes prok-fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes prok-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.prok-auth-bg {
+  background-color: #020617;
+  background-image:
+    radial-gradient(800px 500px at 0% 0%, rgba(56, 189, 248, 0.25), transparent 60%),
+    radial-gradient(750px 520px at 100% 10%, rgba(192, 132, 252, 0.28), transparent 60%),
+    radial-gradient(900px 520px at 50% 100%, rgba(59, 130, 246, 0.18), transparent 65%),
+    linear-gradient(135deg, var(--auth-bg-from), var(--auth-bg-via), var(--auth-bg-to));
+  background-size: 100% 100%, 100% 100%, 100% 100%, 220% 220%;
+  animation: prok-shimmer 10s ease-in-out infinite alternate;
+}
+
+.prok-blob {
+  filter: blur(32px);
+  opacity: 0.4;
+  animation: prok-float 6s ease-in-out infinite;
+}
+
+.prok-card {
+  animation: prok-fade-up 480ms ease-out both;
+}
+
+/* Abstract 3D halo / ring shape */
+.prok-orbit {
+  position: absolute;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at center,
+      transparent 55%,
+      rgba(56, 189, 248, 0.6) 72%,
+      transparent 85%);
+  opacity: 0.7;
+  filter: drop-shadow(0 0 45px rgba(56, 189, 248, 0.55));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prok-auth-bg,
+  .prok-blob,
+  .prok-card {
+    animation: none !important;
   }
 }
